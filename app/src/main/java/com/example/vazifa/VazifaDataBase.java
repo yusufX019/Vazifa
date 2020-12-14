@@ -1,8 +1,15 @@
 package com.example.vazifa;
 
+import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+
+import androidx.annotation.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 class VazifaDataBase extends SQLiteOpenHelper{
@@ -11,7 +18,7 @@ class VazifaDataBase extends SQLiteOpenHelper{
     private static int DB_version          =1;      //version
 
     //Конструктор Класса
-    VazifaDataBase(Context context){
+    VazifaDataBase(@Nullable Context context){
         super(context,DB_name,null,DB_version);
     };
 
@@ -29,4 +36,8 @@ class VazifaDataBase extends SQLiteOpenHelper{
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
     }
+
+
+
+
 }
