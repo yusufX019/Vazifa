@@ -48,8 +48,7 @@ public class AddTask_activity extends AppCompatActivity {
                     //  ---После того как Задача было добавлено Снова вызываем MainActivity
                         Intent intent = new Intent(AddTask_activity.this,MainActivity.class);
                         startActivity(intent);
-                    }
-                    else                     // в случае неудачи вывести СнекБар с соответсвующим сообщением
+                    } else                     // в случае неудачи вывести СнекБар с соответсвующим сообщением
                         Snackbar.make(v,R.string.Fail_Add,Snackbar.LENGTH_SHORT).show();
 
                 }
@@ -57,18 +56,7 @@ public class AddTask_activity extends AppCompatActivity {
 
                     Toast.makeText(AddTask_activity.this,R.string.AskToEnter,Toast.LENGTH_SHORT).show();
                 }
-
-
-
-
-
-
-
             }
         });
     }
-
-
-
-
 }
