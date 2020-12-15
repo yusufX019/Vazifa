@@ -53,9 +53,9 @@ class VazifaDataBase extends SQLiteOpenHelper{
     }
 
 //  Функция которая выдающая все названия задач из базы данных
-    public List<Task> GetNames(){
+    public List<Task> getEvery(){
         List<Task> finalList = new ArrayList<>();
-        String query = "Select name from Main";
+        String query = "Select * from Main";
         SQLiteDatabase database=this.getReadableDatabase();
 
         Cursor cursor = database.rawQuery(query,null);
@@ -63,6 +63,11 @@ class VazifaDataBase extends SQLiteOpenHelper{
         if (cursor.moveToFirst()) {
             do{
                 String name= cursor.getString(1);
+                String desc= cursor.getString(2);
+                String date= cursor.getString(3);
+
+                finalList.add(new Task(name,desc,date));
+
             }while (cursor.moveToNext());
         }
         else{

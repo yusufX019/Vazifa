@@ -4,15 +4,17 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class AddTask_activity extends AppCompatActivity {
 
 //  Компоненты
-    FloatingActionButton saveButton;
+    Button saveButton;
     EditText name;
     EditText desc;
 
@@ -23,7 +25,7 @@ public class AddTask_activity extends AppCompatActivity {
 
 
 //      # Инициализация компонентов
-        saveButton=findViewById(R.id.SaveButton);
+        saveButton= findViewById(R.id.saveButton);
         name=findViewById(R.id.Name_TextInput);
         desc=findViewById(R.id.desc_TextInput);
 
