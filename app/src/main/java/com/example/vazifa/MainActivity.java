@@ -43,8 +43,6 @@ public class MainActivity extends AppCompatActivity {
         UpdateListView();
 
 
-
-
     //  # Он клик на Кнопку "Плюс"
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,11 +54,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent,optionsCompat.toBundle());
             }
         });
-
-
-
-
-
     }
 
 //  # Эта функция Обноваляет Список на Главном Актвити MainActivity
