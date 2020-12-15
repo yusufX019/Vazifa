@@ -42,8 +42,8 @@ public class AddTask_activity extends AppCompatActivity {
                     Task newTask = new Task(name.getText().toString(), desc.getText().toString(), "15-12-2020");
 
                 //         ---------- Обработка Результатов Добавления в базу Данных ----------
-                    if(db.AddTask(newTask)){ // в случае успеха вывести СнекБар
-                        Snackbar.make(v,R.string.Succes_Add,Snackbar.LENGTH_SHORT).show();
+                    if(db.addTask(newTask)){ // в случае успеха вывести СнекБар
+                        Snackbar.make(v,R.string.Succes_Add,Snackbar.LENGTH_LONG).show();
 
                     //  ---После того как Задача было добавлено Снова вызываем MainActivity
                         Intent intent = new Intent(AddTask_activity.this,MainActivity.class);
@@ -53,15 +53,8 @@ public class AddTask_activity extends AppCompatActivity {
                         Snackbar.make(v,R.string.Fail_Add,Snackbar.LENGTH_SHORT).show();
 
                 }
-                else{                                                               //   -------                Если Поле для ввода пустое                        
-
+                else                                                               //   -------                Если Поле для ввода пустое
                     Toast.makeText(AddTask_activity.this,R.string.AskToEnter,Toast.LENGTH_SHORT).show();
-                }
-
-
-
-
-
 
 
             }

@@ -6,12 +6,11 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.strictmode.SqliteObjectLeakedViolation;
-import android.widget.ListView;
 
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+
 import java.util.List;
 
 
@@ -41,7 +40,7 @@ class VazifaDataBase extends SQLiteOpenHelper{
     }
 
 //  Функция которая добовляет в базу данных новую запись
-    public boolean AddTask(Task task){
+    public boolean addTask(Task task){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
@@ -53,7 +52,7 @@ class VazifaDataBase extends SQLiteOpenHelper{
         else                                                         return true;
     }
 
-//  Функция которая выдающая все названия задач из базы данных
+//  Функция которая выдающая всю информацию о задачах задач из базы данных
     public List<Task> getEvery(){
         List<Task> finalList = new ArrayList<>();
         String query = "Select * from Main";
@@ -90,9 +89,21 @@ class VazifaDataBase extends SQLiteOpenHelper{
         return finalList;
 
 
-
     }
 
+    public boolean deleteTask(Task task){
+
+        SQLiteDatabase database = this.getWritableDatabase();
+        String query = "Delete from Main where id="+task.getId();
+
+        Cursor cursor = database.rawQuery(query, null);
+
+        if(cursor.moveToFirst())    return true;
+        else                        return false;
+
+
+
+    }
 
 
 

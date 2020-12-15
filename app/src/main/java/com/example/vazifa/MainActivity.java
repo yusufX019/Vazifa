@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
     public void UpdateListView(){
         //  # АррейАдаптер для ЛистВю
         //    Пока что простой список simple_list item_1 , Есть другие виды списков в том числе с ЧекБоксом, Нужно ПроГуглить в инете и внедрить
-        TaskArrayAdapter=new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1,dataBase.getAllNames());
+        TaskArrayAdapter=new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_multiple_choice,dataBase.getAllNames());
         MainList.setAdapter(TaskArrayAdapter);
     }
 

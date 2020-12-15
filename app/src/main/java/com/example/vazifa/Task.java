@@ -4,7 +4,7 @@ package com.example.vazifa;
 
 
 public class Task {
-    private static int id=0;         // Идентификатор
+    private static int id=0;        // Идентификатор
     private String name;            // Название задачи
     private String description;     // Описание задачи
     private String date;            // Дата когда задача было создана
