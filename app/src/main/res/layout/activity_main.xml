@@ -20,7 +20,10 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:layout_margin="40sp"
-        android:src="@drawable/ic_action_name"/>
+        android:src="@drawable/ic_action_name"
+        android:transitionName="AddButton"
+        tools:targetApi="lollipop" />
+
 
 
 </RelativeLayout>

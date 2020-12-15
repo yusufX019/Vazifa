@@ -37,6 +37,10 @@ class VazifaDataBase extends SQLiteOpenHelper{
 
     }
 
+    public void AddTask(Task task){
+
+    }
+
 
 
 

@@ -1,6 +1,3 @@
 <resources>
     <string name="app_name">Vazifa</string>
-    <string name="description">Description</string>
-    <string name="name_of_the_task">Name of the task</string>
-    <string name="urgency">Urgency</string>
 </resources>
