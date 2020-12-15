@@ -21,7 +21,7 @@
         android:layout_alignParentBottom="true"
         android:layout_margin="40sp"
         android:src="@drawable/ic_action_name" />
-
-
+        android:transitionName="shared_element_to_add_task"
+        android:src="@drawable/ic_action_name"/>
 
 </RelativeLayout>

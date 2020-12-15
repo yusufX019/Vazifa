@@ -1,8 +1,10 @@
 package com.example.vazifa;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityOptionsCompat;
 
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -50,7 +52,8 @@ public class MainActivity extends AppCompatActivity {
 
             // ------- Запуск АддТаск активити -------
                 Intent intent = new Intent(MainActivity.this,AddTask_activity.class);
-                startActivity(intent);
+                ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this,findViewById(R.id.addButton),"shared_element_to_add_task");
+                startActivity(intent,optionsCompat.toBundle());
             }
         });
 
