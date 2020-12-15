@@ -24,7 +24,7 @@
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
         android:layout_below="@+id/Name_TextInput"
-        android:lines="20"
+        android:lines="10"
         android:hint="@string/desc_TextInput_hint"/>
 
 

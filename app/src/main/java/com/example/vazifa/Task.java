@@ -4,16 +4,16 @@ package com.example.vazifa;
 
 
 public class Task {
-    private int    id;              // Идентификатор
+    private static int id=0;         // Идентификатор
     private String name;            // Название задачи
     private String description;     // Описание задачи
     private String date;            // Дата когда задача было создана
 
-    public Task(int id, String name, String description, String date) {
-        this.id = id;
+    public Task( String name, String description, String date) {
         this.name = name;
         this.description = description;
         this.date = date;
+        id++;
     }
 
     @Override

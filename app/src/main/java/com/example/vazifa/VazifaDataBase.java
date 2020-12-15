@@ -5,6 +5,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.strictmode.SqliteObjectLeakedViolation;
+import android.widget.ListView;
 
 import androidx.annotation.Nullable;
 
@@ -37,7 +39,39 @@ class VazifaDataBase extends SQLiteOpenHelper{
 
     }
 
-    public void AddTask(Task task){
+//  Функция которая добовляет в базу данных новую запись
+    public boolean AddTask(Task task){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put("name",task.getName());
+        values.put("description",task.getDescription());
+        values.put("date",task.getDate());
+
+        if(db.insert("Main",null,values)==-1)   return false;
+        else                                                         return true;
+    }
+
+//  Функция которая выдающая все названия задач из базы данных
+    public List<Task> GetNames(){
+        List<Task> finalList = new ArrayList<>();
+        String query = "Select name from Main";
+        SQLiteDatabase database=this.getReadableDatabase();
+
+        Cursor cursor = database.rawQuery(query,null);
+
+        if (cursor.moveToFirst()) {
+            do{
+                String name= cursor.getString(1);
+            }while (cursor.moveToNext());
+        }
+        else{
+            //No result
+        }
+        cursor.close();
+        database.close();
+
+        return finalList;
 
     }
 

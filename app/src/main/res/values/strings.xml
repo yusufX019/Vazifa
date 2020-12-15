@@ -3,4 +3,6 @@
     <string name="name_TextInput_hint">Название задачи</string>
     <string name="desc_TextInput_hint">Описание</string>
     <string name="SaveButton">Сохранить</string>
+    <string name="Succes_Add">Успешно Добавлено</string>
+    <string name="Fail_Add">Не получилось Добавить</string>
 </resources>
