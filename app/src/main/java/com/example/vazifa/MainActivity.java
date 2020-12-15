@@ -18,21 +18,32 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-//  # Инициализация Кнопки +
-    FloatingActionButton addButton;
 
-//  #Лист Вию
-    ListView MainList;
+    FloatingActionButton addButton; //  # Объявление Кнопки "+"
+    ListView MainList;              //  # Лист Вю
+    VazifaDataBase dataBase;        //  # Объект Базы Данных
+    ArrayAdapter TaskArrayAdapter;  //  #
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        addButton=(FloatingActionButton) findViewById(R.id.addButton);
-        MainList =(ListView)             findViewById(R.id.ListView);
+    //  # Инициализация Новаой Базы Данных
+        dataBase = new VazifaDataBase(MainActivity.this);
 
-    //  # Он клик
+    //  # Инициализация Кнопки и Лист Вю
+        addButton=(FloatingActionButton) findViewById(R.id.addButton);  //# -
+        MainList =(ListView)             findViewById(R.id.ListView);   //# -
+
+    //  # Обновляем Список Задач
+        UpdateListView();
+
+
+
+
+    //  # Он клик на Кнопку "Плюс"
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -43,12 +54,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        VazifaDataBase dataBase = new VazifaDataBase(MainActivity.this);
-        List<Task> everyTaskNames = dataBase.getEvery();
 
-        ArrayAdapter TaskArrayAdapter=new ArrayAdapter<Task>(MainActivity.this, android.R.layout.simple_list_item_1,everyTaskNames);
+
+
+
+    }
+
+//  # Эта функция Обноваляет Список на Главном Актвити MainActivity
+    public void UpdateListView(){
+        //  # АррейАдаптер для ЛистВю
+        //    Пока что простой список simple_list item_1 , Есть другие виды списков в том числе с ЧекБоксом, Нужно ПроГуглить в инете и внедрить
+        TaskArrayAdapter=new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1,dataBase.getAllNames());
         MainList.setAdapter(TaskArrayAdapter);
-
     }
 
 

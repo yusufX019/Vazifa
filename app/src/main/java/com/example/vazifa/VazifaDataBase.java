@@ -11,6 +11,7 @@ import android.widget.ListView;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -77,6 +78,18 @@ class VazifaDataBase extends SQLiteOpenHelper{
         database.close();
 
         return finalList;
+
+    }
+
+    public List<String> getAllNames(){
+        List<String> finalList = new ArrayList<>();
+
+        for(int i=0;i<getEvery().size();i++)
+            finalList.add(getEvery().get(i).getName());
+
+        return finalList;
+
+
 
     }
 

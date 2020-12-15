@@ -2,14 +2,15 @@ package com.example.vazifa;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.android.material.button.MaterialButton;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
+
 
 public class AddTask_activity extends AppCompatActivity {
 
@@ -37,13 +38,33 @@ public class AddTask_activity extends AppCompatActivity {
                 VazifaDataBase db=new VazifaDataBase(AddTask_activity.this);
 
             //  ---Создание Обьекта новой задачи
-                Task newTask=new Task(name.getText().toString(),desc.getText().toString(),"15-12-2020");
+                if(name.getText().toString().trim().length()>0) {                    //   -------                Если Поле для ввода не пустое
+                //  # Добавление в Класс нового объекта
+                    Task newTask = new Task(name.getText().toString(), desc.getText().toString(), "15-12-2020");
 
-            //  ---Обработка
-                if(db.AddTask(newTask)) // в случае успеха вывести ТОАСТ
-                    Toast.makeText(AddTask_activity.this,R.string.Succes_Add,Toast.LENGTH_SHORT).show();
-                else                    // в случае неудачи вывести ТОАСТ с соответсвующим сообщением
-                    Toast.makeText(AddTask_activity.this,R.string.Fail_Add,Toast.LENGTH_SHORT).show();
+                //         ---------- Обработка Результатов Добавления в базу Данных ----------
+                    if(db.AddTask(newTask)){ // в случае успеха вывести СнекБар
+                        Snackbar.make(v,R.string.Succes_Add,Snackbar.LENGTH_SHORT).show();
+
+                    //  ---После того как Задача было добавлено Снова вызываем MainActivity
+                        Intent intent = new Intent(AddTask_activity.this,MainActivity.class);
+                        startActivity(intent);
+                    }
+                    else                     // в случае неудачи вывести СнекБар с соответсвующим сообщением
+                        Snackbar.make(v,R.string.Fail_Add,Snackbar.LENGTH_SHORT).show();
+
+                }
+                else{                                                               //   -------                Если Поле для ввода пустое                        
+
+                    Toast.makeText(AddTask_activity.this,R.string.AskToEnter,Toast.LENGTH_SHORT).show();
+                }
+
+
+
+
+
+
+
             }
         });
     }
