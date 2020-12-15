@@ -14,7 +14,7 @@ public class AddTask_activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_addtask);
+        setContentView(R.layout.activity_add_task);
 
         saveButton=findViewById(R.id.SaveButton);
 
