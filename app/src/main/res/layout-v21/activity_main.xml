@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,29 +8,26 @@
 
 
     <ListView
-        android:id="@+id/topListView"
+        android:id="@+id/ListView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:choiceMode="multipleChoice"/>
-
-    <ListView
-        android:id="@+id/bottomListView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/topListView"
-        android:choiceMode="none"/>
+        android:layout_height="wrap_content"/>
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
 
-        android:layout_margin="40dp"
+        android:layout_margin="40sp"
         android:src="@drawable/ic_action_name"
-        android:transitionName="shared_element_to_add_task"
-        tools:targetApi="lollipop" />
+        android:transitionName="shared_element_to_add_task" />
+
+        
+
+
+
+
 
 </RelativeLayout>

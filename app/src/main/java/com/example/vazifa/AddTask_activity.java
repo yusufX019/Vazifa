@@ -36,25 +36,18 @@ public class AddTask_activity extends AppCompatActivity {
             //  ---Создание Объекта Базы данных
                 VazifaDataBase db=new VazifaDataBase(AddTask_activity.this);
 
-            //  ---Создание Обьекта новой задачи
-                if(name.getText().toString().trim().length()>0) {                    //   -------                Если Поле для ввода не пустое
-                //  # Добавление в Класс нового объекта
-                    Task newTask = new Task(name.getText().toString(), desc.getText().toString(), "15-12-2020");
+                // Если Поле для ввода не пустое
+                if(name.getText().toString().trim().length()>0) {
 
-                //         ---------- Обработка Результатов Добавления в базу Данных ----------
-                    if(db.addTask(newTask)){ // в случае успеха вывести СнекБар
+                    if(db.addTask( new Task(0,name.getText().toString(), desc.getText().toString(), "17-12-2020"), VazifaDataBase.Type.UnCompleted)){
                         Snackbar.make(v,R.string.Succes_Add,Snackbar.LENGTH_LONG).show();
-
-                    //  ---После того как Задача было добавлено Снова вызываем MainActivity
-                        Intent intent = new Intent(AddTask_activity.this,MainActivity.class);
-                        startActivity(intent);
+                        startActivity( new Intent(AddTask_activity.this,MainActivity.class));
                     }
-                    else                     // в случае неудачи вывести СнекБар с соответсвующим сообщением
-                        Snackbar.make(v,R.string.Fail_Add,Snackbar.LENGTH_SHORT).show();
+                    else Snackbar.make(v,R.string.Fail_Add,Snackbar.LENGTH_SHORT).show();
 
                 }
-                else                                                               //   -------                Если Поле для ввода пустое
-                    Toast.makeText(AddTask_activity.this,R.string.AskToEnter,Toast.LENGTH_SHORT).show();
+                // Если Поле для ввода пустое
+                else Toast.makeText(AddTask_activity.this,R.string.AskToEnter,Toast.LENGTH_SHORT).show();
 
 
             }

@@ -4,26 +4,21 @@ package com.example.vazifa;
 
 
 public class Task {
-    private static int id=0;        // Идентификатор
+    private int id;                 // Идентификатор
     private String name;            // Название задачи
     private String description;     // Описание задачи
     private String date;            // Дата когда задача было создана
 
-    public Task( String name, String description, String date) {
+    public Task(int id,String name, String description, String date) {
+        this.id =id;
         this.name = name;
         this.description = description;
         this.date = date;
-        id++;
     }
 
     @Override
     public String toString() {
-        return "Task{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", date='" + date + '\'' +
-                '}';
+        return name;
     }
 
     public Task(){};
