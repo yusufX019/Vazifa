@@ -100,24 +100,26 @@ class VazifaDataBase extends SQLiteOpenHelper{
 
 
     public Task getTask(int taskId,Type type){
-        Task resultedTask=null;
-        String query= type==Type.Completed? "Select * from Completed where id ="+taskId
-                                          : "Select * from UnCompleted where id ="+taskId;
+        Task resultedTask;
+        String query = (type==Type.Completed) ? "Select * from   Completed where id =" +taskId
+                                              : "Select * from UnCompleted where id =" +taskId;
 
         SQLiteDatabase database = this.getReadableDatabase();
         Cursor cursor=database.rawQuery(query,null);
 
-        if(cursor.moveToFirst()){
+        if(cursor.moveToFirst()) {
             do {
-                int    id  = cursor.getInt   (0);
-                String name= cursor.getString(1);
-                String desc= cursor.getString(2);
-                String date= cursor.getString(3);
+                int id = cursor.getInt(0);
+                String name = cursor.getString(1);
+                String desc = cursor.getString(2);
+                String date = cursor.getString(3);
 
-                resultedTask=new Task(id,name,desc,date);
+                resultedTask = new Task(id, name, desc, date);
 
-            }while (cursor.moveToNext());
+            } while (cursor.moveToNext());
         }
+        else resultedTask = new Task(-2,"Error","DataBaseError","#45%%");
+
 
 
         cursor.close();

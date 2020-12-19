@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this,findViewById(R.id.addButton),"shared_element_to_task");
                 Intent intent = new Intent(MainActivity.this,TaskActivity.class);
-                intent.putExtra(SELECTED_TASK_ID, parent.getId());
+                intent.putExtra(SELECTED_TASK_ID, ( (Task)parent.getItemAtPosition(position)).getId() );
                 startActivity(intent,optionsCompat.toBundle());
                 return true;
 
