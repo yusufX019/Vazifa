@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
@@ -8,17 +11,23 @@
     android:transitionName="shared_element_to_add_task"
     tools:context=".AddTask_activity">
 
-    <com.google.android.material.textfield.TextInputEditText
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/Name_TextInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
-        android:hint="@string/name_TextInput_hint"
-        />
+        android:hint="@string/desc_TextInput_hint"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-    <com.google.android.material.textfield.TextInputEditText
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/desc_TextInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -26,9 +35,16 @@
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
         android:layout_below="@+id/Name_TextInput"
-        android:lines="10"
-        android:hint="@string/desc_TextInput_hint"/>
+        android:hint="@string/desc_TextInput_hint"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:lines="10"
+           />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/saveButton"
@@ -41,6 +57,5 @@
         android:text="@string/SaveButton" />
 
 
-
-
 </RelativeLayout>
+</layout>
