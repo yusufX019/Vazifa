@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -39,15 +40,20 @@ public class MainActivity extends AppCompatActivity {
     //  # Инициализация Базы данных
         dataBase=new VazifaDataBase(MainActivity.this);
 
-    //  Обновляем Список Невыполненных задач
-        topList.setAdapter(new ArrayAdapter<Task>(MainActivity.this,android.R.layout.simple_list_item_multiple_choice,dataBase.getEvery(VazifaDataBase.Type.UnCompleted)));
-        topList.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
+        updateBottomList();
+        updateTopList();
 
-    //  Обновляем Список Выполненных задач
-        bottomList.setAdapter(new ArrayAdapter<Task>(MainActivity.this,android.R.layout.simple_list_item_1,dataBase.getEvery(VazifaDataBase.Type.Completed)));
 
     //
-        topList.setO
+        topList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                dataBase.addTask( (Task)parent.getItemAtPosition(position), VazifaDataBase.Type.Completed );
+                dataBase.deleteTask( (Task)parent.getItemAtPosition(position), VazifaDataBase.Type.UnCompleted );
+                updateTopList();
+                updateBottomList();
+            }
+        });
 
 
     //  # Он клик на Кнопку "Плюс"
@@ -61,7 +67,16 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    public void updateTopList(){
+        //  Обновляем Список Невыполненных задач
+        topList.setAdapter(new ArrayAdapter<Task>(MainActivity.this,android.R.layout.simple_list_item_multiple_choice,dataBase.getEvery(VazifaDataBase.Type.UnCompleted)));
+        topList.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
+    }
 
+    public void updateBottomList(){
+        //  Обновляем Список Выполненных задач
+        bottomList.setAdapter(new ArrayAdapter<Task>(MainActivity.this,android.R.layout.simple_list_item_1,dataBase.getEvery(VazifaDataBase.Type.Completed)));
+    }
 
 
 }
