@@ -3,14 +3,14 @@ package com.example.vazifa;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityOptionsCompat;
 import android.content.Intent;
-import android.graphics.Paint;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
+
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -19,13 +19,11 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MainActivity extends AppCompatActivity {
 
-
-    FloatingActionButton addButton; //  # Объявление Кнопки "+"
+    public static final String SELECTED_TASK_ID="SelectedTaskID";
+    FloatingActionButton addButton;
     ListView topList;
     ListView bottomList;
-    VazifaDataBase dataBase;        //
-
-
+    VazifaDataBase dataBase;
 
 
     @Override
@@ -47,18 +45,28 @@ public class MainActivity extends AppCompatActivity {
         updateTopList();
 
 
-    //
+    //  Если нажать на задачу
         topList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                dataBase.addTask( (Task)parent.getItemAtPosition(position), VazifaDataBase.Type.Completed );
-                dataBase.deleteTask( (Task)parent.getItemAtPosition(position), VazifaDataBase.Type.UnCompleted );
-
-
+                dataBase.addTask( (Task)parent.getItemAtPosition(position), VazifaDataBase.Type.Completed );      // Добовляем выполненную задачу в в другую таблицу базы данных
+                dataBase.deleteTask( (Task)parent.getItemAtPosition(position), VazifaDataBase.Type.UnCompleted ); // Удаляем из первой базы данных
 
                 updateTopList();
                 updateBottomList();
 
+            }
+        });
+
+    //
+        topList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this,findViewById(R.id.addButton),"shared_element_to_task");
+                Intent intent = new Intent(MainActivity.this,TaskActivity.class);
+                intent.putExtra(SELECTED_TASK_ID, parent.getId());
+                startActivity(intent,optionsCompat.toBundle());
+                return true;
 
 
             }

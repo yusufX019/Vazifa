@@ -7,6 +7,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
 
+
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
@@ -98,15 +99,31 @@ class VazifaDataBase extends SQLiteOpenHelper{
     }
 
 
-    public List<String> getAllNames(Type type){
-        List<String> finalList = new ArrayList<>();
+    public Task getTask(int taskId,Type type){
+        Task resultedTask=null;
+        String query= type==Type.Completed? "Select * from Completed where id ="+taskId
+                                          : "Select * from UnCompleted where id ="+taskId;
 
-        for(int i=0;i<getEvery(type).size();i++)
-            finalList.add(getEvery(type).get(i).getName());
+        SQLiteDatabase database = this.getReadableDatabase();
+        Cursor cursor=database.rawQuery(query,null);
 
-        return finalList;
+        if(cursor.moveToFirst()){
+            do {
+                int    id  = cursor.getInt   (0);
+                String name= cursor.getString(1);
+                String desc= cursor.getString(2);
+                String date= cursor.getString(3);
+
+                resultedTask=new Task(id,name,desc,date);
+
+            }while (cursor.moveToNext());
+        }
 
 
+        cursor.close();
+        database.close();
+
+        return  resultedTask;
 
     }
 

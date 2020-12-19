@@ -6,4 +6,5 @@
     <string name="Succes_Add">Успешно Добавлено</string>
     <string name="Fail_Add">Не получилось Добавить</string>
     <string name="AskToEnter">Введите что нибудь</string>
+    <string name="description">----------------- Описание -----------------</string>
 </resources>
