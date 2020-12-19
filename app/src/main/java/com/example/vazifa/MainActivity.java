@@ -3,12 +3,15 @@ package com.example.vazifa;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityOptionsCompat;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
@@ -50,8 +53,14 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 dataBase.addTask( (Task)parent.getItemAtPosition(position), VazifaDataBase.Type.Completed );
                 dataBase.deleteTask( (Task)parent.getItemAtPosition(position), VazifaDataBase.Type.UnCompleted );
+
+
+
                 updateTopList();
                 updateBottomList();
+
+
+
             }
         });
 
@@ -75,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void updateBottomList(){
         //  Обновляем Список Выполненных задач
-        bottomList.setAdapter(new ArrayAdapter<Task>(MainActivity.this,android.R.layout.simple_list_item_1,dataBase.getEvery(VazifaDataBase.Type.Completed)));
+        bottomList.setAdapter(new ArrayAdapter<Task>(MainActivity.this,R.layout.custom_listview,R.id.CustomTextView,dataBase.getEvery(VazifaDataBase.Type.Completed)));
     }
 
 
