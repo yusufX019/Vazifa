@@ -7,17 +7,15 @@
 
 
     <ListView
-        android:id="@+id/topListView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:choiceMode="multipleChoice"/>
+        android:id="@+id/TopListView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
     <ListView
-        android:id="@+id/bottomListView"
+        android:id="@+id/BottomListView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/topListView"
-        android:choiceMode="none"/>
+        android:layout_below="@+id/TopListView"/>
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

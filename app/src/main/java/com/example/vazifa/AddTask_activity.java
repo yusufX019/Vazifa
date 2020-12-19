@@ -24,6 +24,7 @@ public class AddTask_activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task);
+
 //      # Инициализация компонентов
         saveButton= findViewById(R.id.saveButton);
         name=findViewById(R.id.Name_TextInput);
