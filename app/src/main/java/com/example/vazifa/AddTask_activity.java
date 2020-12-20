@@ -12,6 +12,10 @@ import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import com.google.android.material.textfield.TextInputLayout;
+
+
+
 
 public class AddTask_activity extends AppCompatActivity {
 
@@ -27,8 +31,8 @@ public class AddTask_activity extends AppCompatActivity {
 
 //      # Инициализация компонентов
         saveButton= findViewById(R.id.saveButton);
-        name=findViewById(R.id.Name_TextInput);
-        desc=findViewById(R.id.desc_TextInput);
+        name      = ((TextInputLayout)findViewById(R.id.Name_TextInput)).getEditText();
+        desc      = ((TextInputLayout)findViewById(R.id.desc_TextInput)).getEditText();
 
 //      # Он Клик
         saveButton.setOnClickListener(new View.OnClickListener() {

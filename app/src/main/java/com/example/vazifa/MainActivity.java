@@ -78,8 +78,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
             // ------- Запуск АддТаск активити -------
-                ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this,findViewById(R.id.addButton),"shared_element_to_add_task");
-                startActivity(new Intent(MainActivity.this,AddTask_activity.class),optionsCompat.toBundle());
+                startActivity(new Intent(MainActivity.this,AddTask_activity.class));
             }
         });
     }
