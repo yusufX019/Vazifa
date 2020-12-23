@@ -1,43 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".MainActivity"
-    android:theme="@style/AppTheme">
+    tools:context=".MainActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorPrimaryDark"
-        android:elevation="4dp"
+        android:background="@color/colorPrimary"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        android:elevation="4dp"/>
 
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/navigation_view"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:foregroundGravity="left"
-        app:menu="@menu/drawer_menu" />
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
 
     <ListView
         android:id="@+id/TopListView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:transitionName="shared_element_to_task"
-        tools:targetApi="lollipop" />
+        android:transitionName="shared_element_to_task" />
 
     <ListView
         android:id="@+id/BottomListView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/TopListView"
-        android:transitionName="shared_element_to_task"
-        tools:targetApi="lollipop" />
+        android:transitionName="shared_element_to_task"/>
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -47,8 +42,13 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
 
-        android:layout_margin="60dp"
+        android:layout_margin="50dp"
         android:backgroundTint="#F3EDED"
         android:src="@drawable/ic_action_name" />
 
 </RelativeLayout>
+
+
+
+
+</androidx.drawerlayout.widget.DrawerLayout>

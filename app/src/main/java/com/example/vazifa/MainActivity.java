@@ -25,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
     ListView topList;
     ListView bottomList;
     VazifaDataBase dataBase;
-    Toolbar toolbar;
 
 
     @Override
@@ -38,7 +37,8 @@ public class MainActivity extends AppCompatActivity {
         addButton  = (FloatingActionButton)findViewById(R.id.addButton);  //# -
         topList =(ListView)findViewById(R.id.TopListView);
         bottomList =(ListView)findViewById(R.id.BottomListView);
-        toolbar = (Toolbar)findViewById(R.id.toolbar);
+
+
 
     //  # Инициализация Базы данных
         dataBase=new VazifaDataBase(MainActivity.this);
