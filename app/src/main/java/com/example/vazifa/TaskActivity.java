@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class TaskActivity extends AppCompatActivity {
 
-    private static final String SELECTED_TASK_ID="SelectedTaskID";
+
     TextView name;
     TextView desc;
 
@@ -19,14 +19,15 @@ public class TaskActivity extends AppCompatActivity {
         name=(TextView)findViewById(R.id.TaskName);
         desc=(TextView)findViewById(R.id.TaskDesc);
 
-        int taskID = getIntent().getExtras().getInt(SELECTED_TASK_ID);
+        int taskId = getIntent().getExtras().getInt("SelectedTaskId");
 
         VazifaDataBase dataBase = new VazifaDataBase(TaskActivity.this);
 
-        name.setText( dataBase.getTask(taskID, VazifaDataBase.Type.UnCompleted).getName() );
-        desc.setText( dataBase.getTask(taskID, VazifaDataBase.Type.UnCompleted).getDescription().toString() );
+        DataBaseType type = (getIntent().getExtras().getString("SelectedTaskType").equals("UnCompleted")) ? DataBaseType.UnCompleted
+                                                                                                               : DataBaseType.Completed;
 
-
+        name.setText( dataBase.getTask(taskId,type).getName() );
+        desc.setText( dataBase.getTask(taskId,type).getDescription() );
 
 
     }

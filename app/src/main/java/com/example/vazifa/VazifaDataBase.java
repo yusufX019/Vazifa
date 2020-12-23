@@ -20,10 +20,7 @@ class VazifaDataBase extends SQLiteOpenHelper{
     private static final String DB_name ="Main_DB"; //Название Базы Данных
     private static int DB_version          =1;      //Версия базы Данных
 
-    enum Type{
-        UnCompleted,
-        Completed
-    };
+
 
 
     //Конструктор Класса
@@ -55,7 +52,7 @@ class VazifaDataBase extends SQLiteOpenHelper{
     }
 
 //  Функция которая добовляет в базу данных новую запись
-    public boolean addTask(Task task, Type type){
+    public boolean addTask(Task task, DataBaseType type){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
@@ -63,7 +60,7 @@ class VazifaDataBase extends SQLiteOpenHelper{
         values.put("description",task.getDescription());
         values.put("date",task.getDate());
 
-        if(type==Type.UnCompleted)
+        if(type==DataBaseType.UnCompleted)
             return db.insert("UnCompleted", null, values) != -1;
         else
             return db.insert("Completed", null, values) != -1;
@@ -71,9 +68,9 @@ class VazifaDataBase extends SQLiteOpenHelper{
     }
 
 //  Функция которая выдающая всю информацию о задачах задач из базы данных
-    public List<Task> getEvery(Type type){
+    public List<Task> getEvery(DataBaseType type){
         List<Task> finalList = new ArrayList<>();
-        String query = (type==Type.UnCompleted) ? "Select * from UnCompleted" : "Select * from Completed";
+        String query = (type==DataBaseType.UnCompleted) ? "Select * from UnCompleted" : "Select * from Completed";
 
         SQLiteDatabase database=this.getReadableDatabase();
 
@@ -99,9 +96,9 @@ class VazifaDataBase extends SQLiteOpenHelper{
     }
 
 
-    public Task getTask(int taskId,Type type){
+    public Task getTask(int taskId,DataBaseType type){
         Task resultedTask;
-        String query = (type==Type.Completed) ? "Select * from   Completed where id =" +taskId
+        String query = (type==DataBaseType.Completed) ? "Select * from   Completed where id =" +taskId
                                               : "Select * from UnCompleted where id =" +taskId;
 
         SQLiteDatabase database = this.getReadableDatabase();
@@ -130,10 +127,10 @@ class VazifaDataBase extends SQLiteOpenHelper{
     }
 
     // # Нужно фиксить
-    public boolean deleteTask(Task task,Type type){
+    public boolean deleteTask(Task task,DataBaseType type){
 
         SQLiteDatabase database = this.getWritableDatabase();
-        String query = (type==Type.UnCompleted)?"Delete from UnCompleted where id="+task.getId()    // if
+        String query = (type==DataBaseType.UnCompleted)?"Delete from UnCompleted where id="+task.getId()    // if
                                                :"Delete from   Completed where id="+task.getId();   // else
 
         Cursor cursor = database.rawQuery(query, null);

@@ -44,7 +44,7 @@ public class AddTask_activity extends AppCompatActivity {
                 // Если Поле для ввода не пустое
                 if(name.getText().toString().trim().length()>0) {
 
-                    if(db.addTask( new Task(0,name.getText().toString(), desc.getText().toString(), "17-12-2020"), VazifaDataBase.Type.UnCompleted)){
+                    if(db.addTask( new Task(0,name.getText().toString(), desc.getText().toString(), "17-12-2020"), DataBaseType.UnCompleted)){
                         Snackbar.make(v,R.string.Succes_Add,Snackbar.LENGTH_LONG).show();
                         startActivity( new Intent(AddTask_activity.this,MainActivity.class));
                     }
