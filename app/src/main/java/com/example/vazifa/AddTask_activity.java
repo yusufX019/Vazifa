@@ -4,11 +4,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -25,6 +27,8 @@ public class AddTask_activity extends AppCompatActivity {
 
     EditText name;
     EditText desc;
+    VazifaDataBase dataBase;
+
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -35,12 +39,13 @@ public class AddTask_activity extends AppCompatActivity {
 
 
 //      # Инициализация компонентов
-        name      = ((TextInputLayout)findViewById(R.id.Name_TextInput)).getEditText();
+        name      =  ((TextInputLayout)findViewById(R.id.Name_TextInput)).getEditText();
         desc      = ((TextInputLayout)findViewById(R.id.desc_TextInput)).getEditText();
-
+        dataBase  = new VazifaDataBase(this);
 
 
         name.requestFocus();
+        showKeyboard();
 
 
 
@@ -57,22 +62,33 @@ public class AddTask_activity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        //  ---Создание Объекта Базы данных
-        VazifaDataBase db=new VazifaDataBase(AddTask_activity.this);
+        closeKeyboard();
 
         // Если Поле для ввода не пустое
         if(name.getText().toString().trim().length()>0) {
 
-            if(db.addTask( new Task(0,name.getText().toString(), desc.getText().toString(), "17-12-2020"), DataBaseType.UnCompleted)){
-                Snackbar.make(item.getActionView(),R.string.Succes_Add,Snackbar.LENGTH_LONG).show();
+            if(dataBase.addTask( new Task(0,name.getText().toString(), desc.getText().toString(), "17-12-2020"), DataBaseType.UnCompleted))
                 startActivity( new Intent(AddTask_activity.this,MainActivity.class));
-            }
-            else Snackbar.make(item.getActionView(),R.string.Fail_Add,Snackbar.LENGTH_SHORT).show();
 
         }
         // Если Поле для ввода пустое
         else Toast.makeText(AddTask_activity.this,R.string.AskToEnter,Toast.LENGTH_SHORT).show();
 
+
+
         return super.onOptionsItemSelected(item);
     }
+
+
+    public void showKeyboard(){
+        InputMethodManager imm = (InputMethodManager) this.getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+    }
+
+    public void closeKeyboard(){
+        InputMethodManager imm=(InputMethodManager)this.getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY,0);
+    }
+
+
 }

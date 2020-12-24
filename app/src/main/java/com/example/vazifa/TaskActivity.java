@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityOptionsCompat;
 
 public class TaskActivity extends AppCompatActivity {
 
@@ -48,7 +49,7 @@ public class TaskActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         dataBase.deleteTask(new Task(taskId," "," "," "),type);
-        startActivity(new Intent(this,MainActivity.class));
+         startActivity(new Intent(this,MainActivity.class));
 
         return super.onOptionsItemSelected(item);
     }
