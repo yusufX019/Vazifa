@@ -41,7 +41,7 @@ public class TaskActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.addtask_menu,menu);
+        getMenuInflater().inflate(R.menu.task_menu,menu);
         return super.onCreateOptionsMenu(menu);
     }
 

@@ -20,6 +20,8 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:focusable="true"
+
             />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -43,15 +45,7 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
-        android:id="@+id/saveButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/desc_TextInput"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="50dp"
-        android:layout_marginTop="30dp"
-        android:text="@string/SaveButton" />
+
 
 
 </RelativeLayout>
