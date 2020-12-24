@@ -7,11 +7,7 @@
         android:title="noTitle"
         android:icon="@drawable/ic_tash_icon"
         app:showAsAction="ifRoom"/>
-    <item
-        android:id="@+id/checkMark"
-        android:title="noTitle"
-        android:icon="@drawable/ic_check_mark"
-        app:showAsAction="ifRoom"/>
+
 
 
 
