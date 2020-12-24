@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
     //  # Инициализация Базы данных
         dataBase=new VazifaDataBase(MainActivity.this);
 

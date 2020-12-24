@@ -130,8 +130,8 @@ class VazifaDataBase extends SQLiteOpenHelper{
     public boolean deleteTask(Task task,DataBaseType type){
 
         SQLiteDatabase database = this.getWritableDatabase();
-        String query = (type==DataBaseType.UnCompleted)?"Delete from UnCompleted where id="+task.getId()    // if
-                                               :"Delete from   Completed where id="+task.getId();   // else
+        String query = (type==DataBaseType.UnCompleted)? "Delete from UnCompleted where id="+task.getId()    // if
+                                                         :"Delete from   Completed where id="+task.getId();   // else
 
         Cursor cursor = database.rawQuery(query, null);
 

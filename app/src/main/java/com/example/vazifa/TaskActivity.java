@@ -1,8 +1,12 @@
 package com.example.vazifa;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class TaskActivity extends AppCompatActivity {
@@ -10,6 +14,9 @@ public class TaskActivity extends AppCompatActivity {
 
     TextView name;
     TextView desc;
+    VazifaDataBase dataBase;
+    int taskId;
+    DataBaseType type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -19,17 +26,31 @@ public class TaskActivity extends AppCompatActivity {
         name=(TextView)findViewById(R.id.TaskName);
         desc=(TextView)findViewById(R.id.TaskDesc);
 
-        int taskId = getIntent().getExtras().getInt("SelectedTaskId");
+        taskId = getIntent().getExtras().getInt("SelectedTaskId");
 
-        VazifaDataBase dataBase = new VazifaDataBase(TaskActivity.this);
+        dataBase = new VazifaDataBase(TaskActivity.this);
 
-        DataBaseType type = (getIntent().getExtras().getString("SelectedTaskType").equals("UnCompleted")) ? DataBaseType.UnCompleted
-                                                                                                               : DataBaseType.Completed;
+        type = (getIntent().getExtras().getString("SelectedTaskType").equals("UnCompleted")) ? DataBaseType.UnCompleted
+                                                                                                    : DataBaseType.Completed;
 
         name.setText( dataBase.getTask(taskId,type).getName() );
         desc.setText( dataBase.getTask(taskId,type).getDescription() );
 
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.addtask_menu,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        dataBase.deleteTask(new Task(taskId," "," "," "),type);
+        startActivity(new Intent(this,MainActivity.class));
+
+        return super.onOptionsItemSelected(item);
     }
 
 
