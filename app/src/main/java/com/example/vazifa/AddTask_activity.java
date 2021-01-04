@@ -64,6 +64,7 @@ public class AddTask_activity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         closeKeyboard();
 
+
         // Если Поле для ввода не пустое
         if(name.getText().toString().trim().length()>0) {
 

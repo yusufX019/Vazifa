@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,9 +13,11 @@ import androidx.core.app.ActivityOptionsCompat;
 
 public class TaskActivity extends AppCompatActivity {
 
+    String initialName;
+    String initialDescription;
 
-    TextView name;
-    TextView desc;
+    EditText name;
+    EditText desc;
     VazifaDataBase dataBase;
     int taskId;
     DataBaseType type;
@@ -24,18 +27,22 @@ public class TaskActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task);
 
-        name=(TextView)findViewById(R.id.TaskName);
-        desc=(TextView)findViewById(R.id.TaskDesc);
+        name=(EditText) findViewById(R.id.TaskName);
+        desc=(EditText) findViewById(R.id.TaskDesc);
 
         taskId = getIntent().getExtras().getInt("SelectedTaskId");
 
         dataBase = new VazifaDataBase(TaskActivity.this);
 
         type = (getIntent().getExtras().getString("SelectedTaskType").equals("UnCompleted")) ? DataBaseType.UnCompleted
-                                                                                                    : DataBaseType.Completed;
+                                                                                                  : DataBaseType.Completed;
 
-        name.setText( dataBase.getTask(taskId,type).getName() );
-        desc.setText( dataBase.getTask(taskId,type).getDescription() );
+        initialName        = dataBase.getTask(taskId,type).getName();
+        initialDescription = dataBase.getTask(taskId,type).getDescription();
+
+
+        name.setText( initialName );
+        desc.setText( initialDescription );
 
 
     }
@@ -48,11 +55,26 @@ public class TaskActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        dataBase.deleteTask(new Task(taskId," "," "," "),type);
-         startActivity(new Intent(this,MainActivity.class));
+
+        switch (item.getItemId()){
+            case R.id.trash:
+                dataBase.deleteTask(new Task(taskId," "," "," "),type);
+                startActivity(new Intent(this,MainActivity.class));
+                break;
+            case R.id.checkmark1:
+                if(!initialName.equals(name.getText().toString()) || !initialDescription.equals(desc.getText().toString()))
+                    dataBase.editTask(new Task(taskId,name.getText().toString(),desc.getText().toString(),"0"),type);
+
+                startActivity(new Intent(this,MainActivity.class));
+                break;
+        }
+
 
         return super.onOptionsItemSelected(item);
     }
+
+
+
 
 
 }

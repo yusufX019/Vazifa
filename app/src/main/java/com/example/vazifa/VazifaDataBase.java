@@ -5,7 +5,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-
+import android.os.strictmode.SqliteObjectLeakedViolation;
+import android.util.Log;
+import android.widget.EditText;
 
 
 import androidx.annotation.Nullable;
@@ -99,7 +101,7 @@ class VazifaDataBase extends SQLiteOpenHelper{
     public Task getTask(int taskId,DataBaseType type){
         Task resultedTask;
         String query = (type==DataBaseType.Completed) ? "Select * from   Completed where id =" +taskId
-                                              : "Select * from UnCompleted where id =" +taskId;
+                                                      : "Select * from UnCompleted where id =" +taskId;
 
         SQLiteDatabase database = this.getReadableDatabase();
         Cursor cursor=database.rawQuery(query,null);
@@ -139,4 +141,15 @@ class VazifaDataBase extends SQLiteOpenHelper{
         else                        return false;
 
     }
+
+    public void editTask(Task task,DataBaseType type){
+
+        SQLiteDatabase database =this.getWritableDatabase();
+        String query = (type==DataBaseType.Completed)? "Update Completed set name='" +task.getName()+ "',description='" +task.getDescription()+ "' where id ="+task.getId()
+                                                     : "Update UnCompleted set name='" +task.getName()+ "',description='" +task.getDescription()+ "' where id ="+task.getId();
+
+        //Cursor cursor = database.rawQuery(query, null);
+        database.execSQL(query);
+    }
+
 }

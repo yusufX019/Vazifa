@@ -3,8 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/checkmark1"
+        android:title="@string/settings"
+        android:icon="@drawable/ic_check_mark"
+        app:showAsAction="ifRoom"/>
+
+    <item
         android:id="@+id/trash"
-        android:title="noTitle"
+        android:title="@string/settings"
         android:icon="@drawable/ic_tash_icon"
         app:showAsAction="ifRoom"/>
 

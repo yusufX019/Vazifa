@@ -4,8 +4,9 @@
 
 
     <item
+        android:id="@+id/checkmark"
         android:icon="@drawable/ic_check_mark"
         app:showAsAction="ifRoom"
-        android:title="noTitle"/>
+        android:title="@string/settings"/>
 
 </menu>
