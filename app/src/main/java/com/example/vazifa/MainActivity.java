@@ -1,20 +1,13 @@
 package com.example.vazifa;
-
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityOptionsCompat;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
-
-
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
@@ -35,8 +28,8 @@ public class MainActivity extends AppCompatActivity {
 
     //  # Инициализация Кнопки и Лист Вю
         addButton  = (FloatingActionButton)findViewById(R.id.addButton);  //# -
-        topList =(ListView)findViewById(R.id.TopListView);
-        bottomList =(ListView)findViewById(R.id.BottomListView);
+        topList    = (ListView)findViewById(R.id.TopListView);
+        bottomList = (ListView)findViewById(R.id.BottomListView);
 
 
 
@@ -75,17 +68,19 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    // Эта функция обновляет верхний список
     public void updateTopList(){
-        //  Обновляем Список Невыполненных задач
         topList.setAdapter(new ArrayAdapter<Task>(MainActivity.this,android.R.layout.simple_list_item_multiple_choice,dataBase.getEvery(DataBaseType.UnCompleted)));
         topList.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
     }
 
+    // Эта функция обновляет нижний список
     public void updateBottomList(){
         //  Обновляем Список Выполненных задач
         bottomList.setAdapter(new ArrayAdapter<Task>(MainActivity.this,R.layout.custom_listview,R.id.CustomTextView,dataBase.getEvery(DataBaseType.Completed)));
     }
 
+    // Долгое нажатие
     public void setOnItemLongClickListener(final ListView list, final DataBaseType type){
         list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -94,11 +89,13 @@ public class MainActivity extends AppCompatActivity {
                 String dbType = (type==DataBaseType.Completed) ? "Completed"
                                                                : "UnCompleted";
 
+                // типа анимация
                 ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this,findViewById(R.id.addButton),"shared_element_to_task");
-                Intent intent = new Intent(MainActivity.this,TaskActivity.class);
-                intent.putExtra("SelectedTaskId" , ( (Task)parent.getItemAtPosition(position)).getId() );
-                intent.putExtra("SelectedTaskType",dbType);
 
+                // Создаем интент и начинаем новое активити
+                Intent intent = new Intent(MainActivity.this,TaskActivity.class);
+                intent.putExtra("SelectedTaskId" , ( (Task)parent.getItemAtPosition(position)).getId() ); // передаем Ид
+                intent.putExtra("SelectedTaskType",dbType);                                                // и тип базы данных
                 startActivity(intent,optionsCompat.toBundle());
 
                 return true;
