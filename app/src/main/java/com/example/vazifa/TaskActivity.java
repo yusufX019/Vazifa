@@ -28,8 +28,8 @@ public class TaskActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task);
 
-        name      =  ((TextInputLayout)findViewById(R.id.TaskName)).getEditText();
-        desc      = ((TextInputLayout)findViewById(R.id.TaskDesc)).getEditText();
+        name      =  (EditText)findViewById(R.id.TaskName);
+        desc      = (EditText)findViewById(R.id.TaskDesc);
 
         taskId = getIntent().getExtras().getInt("SelectedTaskId");
 
