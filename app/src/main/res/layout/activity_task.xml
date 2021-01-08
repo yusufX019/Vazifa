@@ -7,35 +7,39 @@
     android:transitionName="toTaskActivity">
 
 
-
-
-    <EditText
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/TaskName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="50dp"
         android:layout_marginLeft="40dp"
-        android:textSize="24dp"
-        android:background="@null"/>
-
-    <TextView
-        android:id="@+id/description_label"
-        android:layout_width="wrap_content"
+        android:layout_marginRight="40dp"
+        android:hint="@string/name_TextInput_hint">
+    <com.google.android.material.textfield.TextInputEditText
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/description"
-        android:layout_below="@+id/TaskName"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"/>
+        android:textColor="@color/textColorHint"
+        android:focusable="true"
 
-    <EditText
+        />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/TaskDesc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/description_label"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="120dp"
         android:layout_marginLeft="40dp"
-        android:textSize="16dp"
-        android:background="@null"/>
+        android:layout_marginRight="40dp"
+        android:hint="@string/desc_TextInput_hint">
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/textColorHint"
+            android:gravity="top"
+            android:lines="3"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
 
 
 

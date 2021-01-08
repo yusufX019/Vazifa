@@ -11,6 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityOptionsCompat;
 
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
+
 public class TaskActivity extends AppCompatActivity {
 
     String initialName;
@@ -27,8 +30,8 @@ public class TaskActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task);
 
-        name=(EditText) findViewById(R.id.TaskName);
-        desc=(EditText) findViewById(R.id.TaskDesc);
+        name      =  ((TextInputLayout)findViewById(R.id.TaskName)).getEditText();
+        desc      = ((TextInputLayout)findViewById(R.id.TaskDesc)).getEditText();
 
         taskId = getIntent().getExtras().getInt("SelectedTaskId");
 
