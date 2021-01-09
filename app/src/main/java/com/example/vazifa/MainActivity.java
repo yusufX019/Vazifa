@@ -2,12 +2,15 @@ package com.example.vazifa;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityOptionsCompat;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
@@ -17,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
     FloatingActionButton addButton;
     ListView topList;
     ListView bottomList;
-    VazifaDataBase dataBase;
+    DataBase dataBase;
 
 
     @Override
@@ -35,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     //  # Инициализация Базы данных
-        dataBase=new VazifaDataBase(MainActivity.this);
+        dataBase=new DataBase(MainActivity.this);
 
         updateBottomList();
         updateTopList();
@@ -63,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
             // ------- Запуск АддТаск активити -------
-                startActivity(new Intent(MainActivity.this,AddTask_activity.class));
+                startActivity(new Intent(MainActivity.this,AddTaskActivity.class));
             }
         });
     }

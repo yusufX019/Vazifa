@@ -19,7 +19,7 @@ public class TaskActivity extends AppCompatActivity {
 
     EditText name;
     EditText desc;
-    VazifaDataBase dataBase;
+    DataBase dataBase;
     int taskId;
     DataBaseType type;
 
@@ -33,7 +33,7 @@ public class TaskActivity extends AppCompatActivity {
 
         taskId = getIntent().getExtras().getInt("SelectedTaskId");
 
-        dataBase = new VazifaDataBase(TaskActivity.this);
+        dataBase = new DataBase(TaskActivity.this);
 
         type = (getIntent().getExtras().getString("SelectedTaskType").equals("UnCompleted")) ? DataBaseType.UnCompleted
                                                                                                   : DataBaseType.Completed;

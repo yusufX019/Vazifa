@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-class VazifaDataBase extends SQLiteOpenHelper{
+class DataBase extends SQLiteOpenHelper{
 
     private static final String DB_name ="Main_DB"; //Название Базы Данных
     private static int DB_version          =1;      //Версия базы Данных
@@ -26,7 +26,7 @@ class VazifaDataBase extends SQLiteOpenHelper{
 
 
     //Конструктор Класса
-    VazifaDataBase(@Nullable Context context){
+    DataBase(@Nullable Context context){
         super(context,DB_name,null,DB_version);
     };
 

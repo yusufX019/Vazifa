@@ -18,13 +18,13 @@ import com.google.android.material.textfield.TextInputLayout;
 
 
 
-public class AddTask_activity extends AppCompatActivity {
+public class AddTaskActivity extends AppCompatActivity {
 
 //  Компоненты
 
     EditText name;
     EditText desc;
-    VazifaDataBase dataBase;
+    DataBase dataBase;
 
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -38,7 +38,7 @@ public class AddTask_activity extends AppCompatActivity {
 //      # Инициализация компонентов
         name      =  ((TextInputLayout)findViewById(R.id.Name_TextInput)).getEditText();
         desc      = ((TextInputLayout)findViewById(R.id.desc_TextInput)).getEditText();
-        dataBase  = new VazifaDataBase(this);
+        dataBase  = new DataBase(this);
 
 
         name.requestFocus();
@@ -66,11 +66,11 @@ public class AddTask_activity extends AppCompatActivity {
         if(name.getText().toString().trim().length()>0) {
 
             if(dataBase.addTask( new Task(0,name.getText().toString(), desc.getText().toString(), "17-12-2020"), DataBaseType.UnCompleted))
-                startActivity( new Intent(AddTask_activity.this,MainActivity.class));
+                startActivity( new Intent(AddTaskActivity.this,MainActivity.class));
 
         }
         // Если Поле для ввода пустое
-        else Toast.makeText(AddTask_activity.this,R.string.AskToEnter,Toast.LENGTH_SHORT).show();
+        else Toast.makeText(AddTaskActivity.this,R.string.AskToEnter,Toast.LENGTH_SHORT).show();
 
 
 
