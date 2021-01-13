@@ -16,27 +16,22 @@ public class Task {
         this.date = date;
     }
 
+    //second constructor that does nothing
+    public Task(){};
+
     @Override
     public String toString() {
-        return name;
+        return "Task{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", date='" + date + '\'' +
+                '}';
     }
 
-    public Task(){};
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
     }
 
     public int getId() {

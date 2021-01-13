@@ -1,26 +1,31 @@
 package com.example.vazifa;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityOptionsCompat;
+
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
-import android.graphics.Paint;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AbsListView;
+
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+
 import android.widget.ListView;
-import android.widget.TextView;
+
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 
 
 public class MainActivity extends AppCompatActivity {
 
 
     FloatingActionButton addButton;
-    ListView topList;
-    ListView bottomList;
-    DataBase dataBase;
+    static ListView topList;
+    static ListView bottomList;
+    static DataBase dataBase;
 
 
     @Override
@@ -31,8 +36,8 @@ public class MainActivity extends AppCompatActivity {
 
     //  # Инициализация Кнопки и Лист Вю
         addButton  = (FloatingActionButton)findViewById(R.id.addButton);  //# -
-        topList    = (ListView)findViewById(R.id.TopListView);
-        bottomList = (ListView)findViewById(R.id.BottomListView);
+        topList    = findViewById(R.id.TopListView);
+        bottomList = findViewById(R.id.BottomListView);
 
 
 
@@ -40,21 +45,16 @@ public class MainActivity extends AppCompatActivity {
     //  # Инициализация Базы данных
         dataBase=new DataBase(MainActivity.this);
 
-        updateBottomList();
-        updateTopList();
+        updateBottomList(MainActivity.this);
+        updateTopList(MainActivity.this);
 
 
-    //  Если нажать на задачу
-        topList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                dataBase.addTask( (Task)parent.getItemAtPosition(position), DataBaseType.Completed );      // Добовляем выполненную задачу в в другую таблицу базы данных
-                dataBase.deleteTask( (Task)parent.getItemAtPosition(position), DataBaseType.UnCompleted ); // Удаляем из первой базы данных
 
-                updateTopList();
-                updateBottomList();
-            }
-        });
+
+
+
+
+
 
 
         setOnItemLongClickListener(bottomList, DataBaseType.Completed);
@@ -71,16 +71,16 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+
     // Эта функция обновляет верхний список
-    public void updateTopList(){
-        topList.setAdapter(new ArrayAdapter<Task>(MainActivity.this,android.R.layout.simple_list_item_multiple_choice,dataBase.getEvery(DataBaseType.UnCompleted)));
-        topList.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
+    public static void updateTopList(Activity context){
+        topList.setAdapter(new CustomAdapter(context,dataBase.getAllTasks(DataBaseType.UnCompleted)));
     }
 
     // Эта функция обновляет нижний список
-    public void updateBottomList(){
+    public static void updateBottomList(Activity context){
         //  Обновляем Список Выполненных задач
-        bottomList.setAdapter(new ArrayAdapter<Task>(MainActivity.this,R.layout.custom_listview,R.id.CustomTextView,dataBase.getEvery(DataBaseType.Completed)));
+        bottomList.setAdapter(new ArrayAdapter<Task>(context,R.layout.custom_listview,R.id.CustomTextView,dataBase.getAllTasks(DataBaseType.Completed)));
     }
 
     // Долгое нажатие
@@ -88,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
         list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+
 
                 String dbType = (type==DataBaseType.Completed) ? "Completed"
                                                                : "UnCompleted";
@@ -107,6 +108,9 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
+
+
 
 
 }

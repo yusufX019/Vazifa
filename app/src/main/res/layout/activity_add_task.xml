@@ -5,7 +5,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddTask_activity">
+    tools:context=".AddTaskActivity">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/Name_TextInput"

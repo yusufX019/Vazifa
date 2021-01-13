@@ -70,7 +70,7 @@ class DataBase extends SQLiteOpenHelper{
     }
 
 //  Функция которая выдающая всю информацию о задачах задач из базы данных
-    public List<Task> getEvery(DataBaseType type){
+    public List<Task> getAllTasks(DataBaseType type){
         List<Task> finalList = new ArrayList<>();
         String query = (type==DataBaseType.UnCompleted) ? "Select * from UnCompleted" : "Select * from Completed";
 
@@ -148,7 +148,7 @@ class DataBase extends SQLiteOpenHelper{
         String query = (type==DataBaseType.Completed)? "Update Completed set name='" +task.getName()+ "',description='" +task.getDescription()+ "' where id ="+task.getId()
                                                      : "Update UnCompleted set name='" +task.getName()+ "',description='" +task.getDescription()+ "' where id ="+task.getId();
 
-        //Cursor cursor = database.rawQuery(query, null);
+
         database.execSQL(query);
     }
 
