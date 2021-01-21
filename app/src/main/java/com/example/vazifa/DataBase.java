@@ -5,9 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.strictmode.SqliteObjectLeakedViolation;
-import android.util.Log;
-import android.widget.EditText;
+import android.provider.ContactsContract;
 
 
 import androidx.annotation.Nullable;
@@ -19,8 +17,9 @@ import java.util.List;
 
 class DataBase extends SQLiteOpenHelper{
 
-    private static final String DB_name ="Main_DB"; //Название Базы Данных
-    private static int DB_version          =1;      //Версия базы Данных
+    private static final String DB_name ="MainDataBase"; //Название Базы Данных
+    private static int DB_version          =1;           //Версия базы Данных
+
 
 
 
@@ -30,22 +29,19 @@ class DataBase extends SQLiteOpenHelper{
         super(context,DB_name,null,DB_version);
     };
 
-    /** В одной Базе данных будет создано две таблицы **/
+
+
+
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        // Создаем Две Таблицы, одна будет хранить данные о невыполненных задачах а вторая о уже выполненных
-        db.execSQL("Create Table UnCompleted("             //название таблицы UnCompleted
+        db.execSQL("Create Table Tasks("
                 + "id integer primary key autoincrement,"
                 + "name text,"
                 + "description text,"
-                + "date date );");
+                + "date date,"
+                + "completed integer);");
 
-        db.execSQL("Create Table Completed("             //название таблицы Completed
-                + "id integer primary key,"
-                + "name text,"
-                + "description text,"
-                + "date date );");
     }
 
     @Override
@@ -53,29 +49,29 @@ class DataBase extends SQLiteOpenHelper{
 
     }
 
+    private boolean getBool(int i){ return i==1;}
+    private int getInt (boolean b){return b?1:0;}
+
 //  Функция которая добовляет в базу данных новую запись
-    public boolean addTask(Task task, DataBaseType type){
+    public boolean add(Task task){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
         values.put("name",task.getName());
         values.put("description",task.getDescription());
         values.put("date",task.getDate());
+        values.put("completed",0);
 
-        if(type==DataBaseType.UnCompleted)
-            return db.insert("UnCompleted", null, values) != -1;
-        else
-            return db.insert("Completed", null, values) != -1;
+
+        return db.insert("Tasks", null, values) != -1;
 
     }
 
 //  Функция которая выдающая всю информацию о задачах задач из базы данных
-    public List<Task> getAllTasks(DataBaseType type){
+    public List<Task> getAll(){
         List<Task> finalList = new ArrayList<>();
-        String query = (type==DataBaseType.UnCompleted) ? "Select * from UnCompleted" : "Select * from Completed";
-
+        String query = "Select * from Tasks";
         SQLiteDatabase database=this.getReadableDatabase();
-
         Cursor cursor = database.rawQuery(query,null);
 
         if (cursor.moveToFirst()) {
@@ -84,8 +80,9 @@ class DataBase extends SQLiteOpenHelper{
                 String name= cursor.getString(1);
                 String desc= cursor.getString(2);
                 String date= cursor.getString(3);
+                int completed=cursor.getInt  (4);
 
-                finalList.add(new Task(id,name,desc,date));
+                finalList.add(new Task(id,name,desc,date,getBool(completed)));
 
             }while (cursor.moveToNext());
         }
@@ -98,10 +95,9 @@ class DataBase extends SQLiteOpenHelper{
     }
 
 
-    public Task getTask(int taskId,DataBaseType type){
+    public Task get(int taskId){
         Task resultedTask;
-        String query = (type==DataBaseType.Completed) ? "Select * from   Completed where id =" +taskId
-                                                      : "Select * from UnCompleted where id =" +taskId;
+        String query = "Select * from Tasks where id =" +taskId;
 
         SQLiteDatabase database = this.getReadableDatabase();
         Cursor cursor=database.rawQuery(query,null);
@@ -112,12 +108,13 @@ class DataBase extends SQLiteOpenHelper{
                 String name = cursor.getString(1);
                 String desc = cursor.getString(2);
                 String date = cursor.getString(3);
+                int completed=cursor.getInt(4);
 
-                resultedTask = new Task(id, name, desc, date);
+                resultedTask = new Task(id, name, desc, date,getBool(completed));
 
             } while (cursor.moveToNext());
         }
-        else resultedTask = new Task(-2,"Error","DataBaseError","#45%%");
+        else resultedTask=null;
 
 
 
@@ -128,12 +125,11 @@ class DataBase extends SQLiteOpenHelper{
 
     }
 
-    // # Нужно фиксить
-    public boolean deleteTask(Task task,DataBaseType type){
-
+    //
+    public boolean delete(Task task){
         SQLiteDatabase database = this.getWritableDatabase();
-        String query = (type==DataBaseType.UnCompleted)? "Delete from UnCompleted where id="+task.getId()    // if
-                                                         :"Delete from   Completed where id="+task.getId();   // else
+
+        String query = "Delete from Tasks where id="+task.getId() ;
 
         Cursor cursor = database.rawQuery(query, null);
 
@@ -142,14 +138,19 @@ class DataBase extends SQLiteOpenHelper{
 
     }
 
-    public void editTask(Task task,DataBaseType type){
 
+    //TODO Слишком сложный код нужно изменить
+    public void edit(Task task){
         SQLiteDatabase database =this.getWritableDatabase();
-        String query = (type==DataBaseType.Completed)? "Update Completed set name='" +task.getName()+ "',description='" +task.getDescription()+ "' where id ="+task.getId()
-                                                     : "Update UnCompleted set name='" +task.getName()+ "',description='" +task.getDescription()+ "' where id ="+task.getId();
+        String query1 = "Update Tasks set " +
+                "name='" +task.getName() +
+                "',description='" +task.getDescription()+
+                "',completed="+getInt(task.isCompleted())+
+                " where id ="+task.getId();
 
 
-        database.execSQL(query);
+        database.execSQL(query1);
+
     }
 
 }

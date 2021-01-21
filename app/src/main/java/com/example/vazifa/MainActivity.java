@@ -1,31 +1,37 @@
 package com.example.vazifa;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityOptionsCompat;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+
 import android.view.View;
 
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
-
-
     FloatingActionButton addButton;
-    static ListView topList;
-    static ListView bottomList;
+    static RecyclerView recyclerView;
     static DataBase dataBase;
+
 
 
     @Override
@@ -33,91 +39,62 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //  Инициализация элементов интерфейса
+        addButton    = findViewById(R.id.addButton);
+        recyclerView = findViewById(R.id.list);
 
-    //  # Инициализация Кнопки и Лист Вю
-        addButton  = (FloatingActionButton)findViewById(R.id.addButton);  //# -
-        topList    = findViewById(R.id.TopListView);
-        bottomList = findViewById(R.id.BottomListView);
+        // Инициализация базы данных
+        dataBase = new DataBase(this);
 
+        //
+        addButton.setOnClickListener(onButtonClick);
 
+        setRecyclerView();
+        setRecyclerViewDivider();
+    }
 
+    private void setRecyclerViewDivider() {
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),(new LinearLayoutManager(this).getOrientation()));
+        recyclerView.addItemDecoration(dividerItemDecoration);
+    }
 
-    //  # Инициализация Базы данных
-        dataBase=new DataBase(MainActivity.this);
-
-        updateBottomList(MainActivity.this);
-        updateTopList(MainActivity.this);
-
-
-
-
-
-
-
-
-
-
-        setOnItemLongClickListener(bottomList, DataBaseType.Completed);
-        setOnItemLongClickListener(topList,DataBaseType.UnCompleted);
+    private void setRecyclerView() {
+        TaskList taskList=new TaskList(this);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(new CustomAdapter(taskList.getAsSorted()));
+    }
 
 
-    //  # Он клик на Кнопку "Плюс"
-        addButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+    AdapterView.OnItemClickListener onListItemClick = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            // типа анимация
+            ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this, findViewById(R.id.addButton), "shared_element_to_task");
+            Intent intent = new Intent(MainActivity.this, TaskActivity.class);
+
+            /** Потому что я пока не нашел способа как передать объект класса Task в другое активити через Интент
+             *  будет передаватся поле "Id" класса Task */
+            intent.putExtra("SelectedTaskId", ((Task) parent.getItemAtPosition(position)).getId());
+            // Наченаем новое активити
+            startActivity(intent, optionsCompat.toBundle());
+        }
+    };
+
+    View.OnClickListener onButtonClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
             // ------- Запуск АддТаск активити -------
-                startActivity(new Intent(MainActivity.this,AddTaskActivity.class));
-            }
-        });
+            startActivity(new Intent(MainActivity.this, AddTaskActivity.class));
+        }
+    };
+
+
+    public static Context getContext(){
+        return getContext();
     }
-
-
-    // Эта функция обновляет верхний список
-    public static void updateTopList(Activity context){
-        topList.setAdapter(new CustomAdapter(context,dataBase.getAllTasks(DataBaseType.UnCompleted)));
-    }
-
-    // Эта функция обновляет нижний список
-    public static void updateBottomList(Activity context){
-        //  Обновляем Список Выполненных задач
-        bottomList.setAdapter(new ArrayAdapter<Task>(context,R.layout.custom_listview,R.id.CustomTextView,dataBase.getAllTasks(DataBaseType.Completed)));
-    }
-
-    // Долгое нажатие
-    public void setOnItemLongClickListener(final ListView list, final DataBaseType type){
-        list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-
-
-                String dbType = (type==DataBaseType.Completed) ? "Completed"
-                                                               : "UnCompleted";
-
-                // типа анимация
-                ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this,findViewById(R.id.addButton),"shared_element_to_task");
-
-                // Создаем интент и начинаем новое активити
-                Intent intent = new Intent(MainActivity.this,TaskActivity.class);
-                intent.putExtra("SelectedTaskId" , ( (Task)parent.getItemAtPosition(position)).getId() ); // передаем Ид
-                intent.putExtra("SelectedTaskType",dbType);                                                // и тип базы данных
-                startActivity(intent,optionsCompat.toBundle());
-
-                return true;
-
-            }
-        });
-
-    }
-
-
-
 
 
 }
-
-
-
-
 
 
 

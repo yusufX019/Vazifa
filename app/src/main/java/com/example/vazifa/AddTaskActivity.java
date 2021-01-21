@@ -59,14 +59,15 @@ public class AddTaskActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        closeKeyboard();
+        hideKeyboard();
 
 
         // Если Поле для ввода не пустое
         if(name.getText().toString().trim().length()>0) {
 
-            if(dataBase.addTask( new Task(0,name.getText().toString(), desc.getText().toString(), "17-12-2020"), DataBaseType.UnCompleted))
-                startActivity( new Intent(AddTaskActivity.this,MainActivity.class));
+            if(dataBase.add( new Task(0,name.getText().toString(), desc.getText().toString(), "17-12-2020",false)))
+                startActivity(new Intent(AddTaskActivity.this, MainActivity.class));
+
 
         }
         // Если Поле для ввода пустое
@@ -83,7 +84,7 @@ public class AddTaskActivity extends AppCompatActivity {
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
     }
 
-    public void closeKeyboard(){
+    public void hideKeyboard(){
         InputMethodManager imm=(InputMethodManager)this.getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY,0);
     }

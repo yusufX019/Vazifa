@@ -7,19 +7,14 @@
     tools:context=".MainActivity"
     android:transitionName="toMainActivity">
 
-    <ListView
-        android:id="@+id/TopListView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:transitionName="shared_element_to_task" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="horizontal"
+       />
 
-    <ListView
-        android:id="@+id/BottomListView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/TopListView"
-        android:cacheColorHint="#FFFFFF"
-        android:transitionName="shared_element_to_task" />
+
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addButton"

@@ -8,12 +8,16 @@ public class Task {
     private String name;            // Название задачи
     private String description;     // Описание задачи
     private String date;            // Дата когда задача было создана
+    private boolean completed;
 
-    public Task(int id,String name, String description, String date) {
+
+
+    public Task(int id, String name, String description, String date,boolean completed) {
         this.id =id;
         this.name = name;
         this.description = description;
         this.date = date;
+        this.completed=completed;
     }
 
     //second constructor that does nothing
@@ -49,4 +53,13 @@ public class Task {
     public String getDate() {
         return date;
     }
+
+    public boolean isCompleted() {
+        return completed;
+    }
+
+    public void changeState(){
+        this.completed=!this.completed;
+    }
+
 }

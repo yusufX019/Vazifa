@@ -9,9 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 
-import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
-
 public class TaskActivity extends AppCompatActivity {
 
     String initialName;
@@ -21,7 +18,7 @@ public class TaskActivity extends AppCompatActivity {
     EditText desc;
     DataBase dataBase;
     int taskId;
-    DataBaseType type;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -35,11 +32,10 @@ public class TaskActivity extends AppCompatActivity {
 
         dataBase = new DataBase(TaskActivity.this);
 
-        type = (getIntent().getExtras().getString("SelectedTaskType").equals("UnCompleted")) ? DataBaseType.UnCompleted
-                                                                                                  : DataBaseType.Completed;
 
-        initialName        = dataBase.getTask(taskId,type).getName();
-        initialDescription = dataBase.getTask(taskId,type).getDescription();
+
+        initialName        = dataBase.get(taskId).getName();
+        initialDescription = dataBase.get(taskId).getDescription();
 
 
         name.setText( initialName );
@@ -59,12 +55,12 @@ public class TaskActivity extends AppCompatActivity {
 
         switch (item.getItemId()){
             case R.id.trash:
-                dataBase.deleteTask(new Task(taskId," "," "," "),type);
+                dataBase.delete(new Task(taskId," "," "," ",false));
                 startActivity(new Intent(this,MainActivity.class));
                 break;
             case R.id.checkmark1:
                 if(!initialName.equals(name.getText().toString()) || !initialDescription.equals(desc.getText().toString()))
-                    dataBase.editTask(new Task(taskId,name.getText().toString(),desc.getText().toString(),"0"),type);
+                    dataBase.edit(new Task(taskId,name.getText().toString(),desc.getText().toString(),"4",false));
 
                 startActivity(new Intent(this,MainActivity.class));
                 break;

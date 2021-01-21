@@ -1,76 +1,69 @@
 package com.example.vazifa;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.Intent;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.core.app.ActivityOptionsCompat;
+import androidx.recyclerview.widget.RecyclerView;
+
+import org.w3c.dom.Text;
 
 import java.util.List;
+import java.util.zip.Inflater;
 
-/** This class is custom array adapter that extends ArrayAdapter with type of 'Task' */
-
-public class CustomAdapter extends ArrayAdapter<Task> {
-    private List<Task> tasks;   //List of tasks
-    private Activity context;
-
-    // Constructor
-    public CustomAdapter(Activity context, List<Task> tasks){
-        super(context,R.layout.list_with_checkbox,tasks);
-
-        this.context=context;
-        this.tasks=tasks;
-
-    }
-
-    // in these method i will realise all the manipulations with listView
-    //--
-    @Override
-    public View getView(final int postion, View view, ViewGroup parent){
+public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder> {
+    private List<Task> tasks;
 
 
-        if(view==null) {
-            // getting view via layoutInflater
-            view = context.getLayoutInflater().inflate(R.layout.list_with_checkbox, null, true);
+    public static class ViewHolder extends RecyclerView.ViewHolder{
+        private final TextView textView;
+        private final CheckBox checkBox;
 
-            //Initializing textview and checkbox
-            TextView textview=(TextView)view.findViewById(R.id.text_inList);
-            CheckBox checkBox=(CheckBox)view.findViewById(R.id.checkbox_inList);
+        //Constructor of Inner class
+        public ViewHolder(View view){
+            super(view);
 
-            //setting the text of TextView as the name of the task
-            textview.setText(tasks.get(postion).getName());
-
-           final DataBase dataBase = new DataBase(context);
-
-            checkBox.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    dataBase.addTask( tasks.get(postion), DataBaseType.Completed );      // Добовляем выполненную задачу в в другую таблицу базы данных
-                    dataBase.deleteTask( tasks.get(postion), DataBaseType.UnCompleted ); // Удаляем из первой базы данных
-
-                    MainActivity.updateBottomList(context);
-                    MainActivity.updateTopList(context);
-
-                }
-            });
-
+            textView=view.findViewById(R.id.text_inList);
+            checkBox=view.findViewById(R.id.checkbox_inList);
         }
 
-
-
-
-
-        return view;
-
+        //Getters
+        public TextView getTextView() { return textView; }
+        public CheckBox getCheckBox() { return checkBox; }
     }
+
+    //Constructor
+    public CustomAdapter(List<Task> tasks){ this.tasks=tasks; }
+
+    @Override
+    public ViewHolder onCreateViewHolder(ViewGroup viewGroup,int viewType){
+        View view = LayoutInflater.from(viewGroup.getContext())
+                .inflate(R.layout.list_with_checkbox,viewGroup,false);
+
+        return new ViewHolder(view);
+    }
+
+
+    @Override
+    public void onBindViewHolder(ViewHolder viewHolder,final int position){
+        viewHolder.getTextView().setText(tasks.get(position).getName());
+        viewHolder.getCheckBox().setChecked(tasks.get(position).isCompleted());
+    }
+
+    @Override
+    public int getItemCount(){return tasks.size();}
+
+    private  View.OnClickListener onClickListener=new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Toast.makeText(MainActivity.getContext(),"Clicked",Toast.LENGTH_SHORT).show();
+        }
+    };
 
 
 }
